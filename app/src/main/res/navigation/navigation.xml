@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/cardsFragment">
+
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.example.lab_3.ui.cards.CardsFragment"
+        android:label="fragment_cards"
+        tools:layout="@layout/fragment_cards" >
+        <action
+            android:id="@+id/action_cardsFragment_to_cardDetailFragment"
+            app:destination="@id/cardDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardDetailFragment"
+        android:name="com.example.lab_3.ui.cardDetail.CardDetailFragment"
+        android:label="fragment_card_detail"
+        tools:layout="@layout/fragment_card_detail" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="cardSet"
+            app:argType="string" />
+        <argument
+            android:name="rarity"
+            app:argType="string" />
+        <argument
+            android:name="health"
+            app:argType="integer" />
+        <argument
+            android:name="attack"
+            app:argType="integer" />
+        <argument android:name="cost"
+            app:argType="integer" />
+        <argument
+            android:name="image"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_cardDetailFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment" />
+    </fragment>
+</navigation>
