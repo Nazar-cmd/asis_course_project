@@ -17,7 +17,7 @@ private lateinit var adapter: CardsAdapter
 private lateinit var recyclerView: RecyclerView
 
 
-class CardsFragment : Fragment() {
+class CardsFragment : Fragment(){
     private var cardsArrayList = arrayListOf<MockCard>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

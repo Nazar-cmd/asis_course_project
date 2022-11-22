@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3.R
 import com.example.lab_3.data.mock.model.MockCard
 
-class CardsAdapter(private val cardsList: ArrayList<MockCard>) : RecyclerView.Adapter<CardsViewHolder>() {
+class CardsAdapter(
+    private val cardsList: ArrayList<MockCard>,
+    ) : RecyclerView.Adapter<CardsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
 
@@ -19,6 +21,7 @@ class CardsAdapter(private val cardsList: ArrayList<MockCard>) : RecyclerView.Ad
         holder.setImage(currentCard.img)
         holder.setName(currentCard.name)
         holder.setType(currentCard.type)
+        holder.setViewMoreHandler(currentCard)
     }
 
     override fun getItemCount(): Int {
