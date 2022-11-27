@@ -1,6 +1,7 @@
 package com.example.lab_3.data
 
 import com.example.lab_3.data.cache.database.CardDao
+import com.example.lab_3.data.cache.model.CacheCard
 import com.example.lab_3.data.mapper.DataCardMapper
 import com.example.lab_3.data.remote.retrofit.CardRetrofit
 import com.example.lab_3.domain.model.DomainCard
@@ -20,9 +21,13 @@ constructor(
         emit(CardsUiState.Loading)
 
         try {
-            val remoteCards = cardRetrofit.getBasicSetCards();
+            var cachedCards: List<CacheCard> = cardDao.get()
 
-            println(remoteCards.toString())
+            if  (cachedCards.isNotEmpty()) {
+                emit(CardsUiState.Success(cardMapper.mapCacheListDomainList(cachedCards)))
+            }
+
+            val remoteCards = cardRetrofit.getBasicSetCards();
 
             val domainCards = cardMapper.mapRemoteListDomainList(remoteCards)
 
@@ -33,7 +38,7 @@ constructor(
                 cardDao.insert(cacheCard);
             }
 
-            val cachedCards = cardDao.get()
+            cachedCards = cardDao.get()
 
             emit(CardsUiState.Success(cardMapper.mapCacheListDomainList(cachedCards)))
 

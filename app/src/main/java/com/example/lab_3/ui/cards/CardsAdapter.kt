@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3.R
-import com.example.lab_3.data.mock.model.MockCard
 import com.example.lab_3.domain.model.DomainCard
 
 class CardsAdapter(

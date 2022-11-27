@@ -1,17 +1,14 @@
 package com.example.lab_3.ui.cards
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_3.R
-import com.example.lab_3.data.mock.model.MockCard
 import com.example.lab_3.domain.model.DomainCard
 
 // TODO: on bind view holder?
