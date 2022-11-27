@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab_3.R
 import com.example.lab_3.data.mock.model.MockCard
+import com.example.lab_3.domain.model.DomainCard
 
 // TODO: on bind view holder?
 class CardsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -36,7 +37,7 @@ class CardsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
         cardTypeView.text = type
     }
 
-    fun setViewMoreHandler(card: MockCard) {
+    fun setViewMoreHandler(card: DomainCard) {
         val bundle = bundleOf(
             "image" to card.img,
             "cardSet" to card.cardSet,

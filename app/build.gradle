@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -49,12 +50,31 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    implementation 'com.google.dagger:dagger:2.28.3'
-    kapt 'com.google.dagger:dagger-compiler:2.28'
+    // Room
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation 'androidx.room:room-ktx:2.4.3' // Kotlin Extensions and Coroutines support for Room
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1' // LifecycleScope
+
+
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-compiler:2.44.2'
+
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
+
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }

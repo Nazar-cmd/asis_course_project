@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3.R
 import com.example.lab_3.data.mock.model.MockCard
+import com.example.lab_3.domain.model.DomainCard
 
 class CardsAdapter(
-    private val cardsList: ArrayList<MockCard>,
+    private val cardsList: List<DomainCard>,
     ) : RecyclerView.Adapter<CardsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)

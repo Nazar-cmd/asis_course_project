@@ -9,16 +9,43 @@ import com.example.lab_3.data.remote.model.Constants.COST
 import com.example.lab_3.data.remote.model.Constants.HEALTH
 import com.example.lab_3.data.remote.model.Constants.IMAGE
 import com.example.lab_3.data.remote.model.Constants.TYPE
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class RemoteCard(
- @SerializedName(NAME) val name: String,
- @SerializedName(CARD_ID) val id: String,
- @SerializedName(CARD_SET) val cardSet: String,
- @SerializedName(TYPE) val type: String,
- @SerializedName(RARITY) val rarity: String?,
- @SerializedName(ATTACK) val attack: Int?,
- @SerializedName(COST) val cost: Int?,
- @SerializedName(HEALTH) val health: Int?,
- @SerializedName(IMAGE) val image: String?,
+ @SerializedName(NAME)
+ @Expose
+ val name: String,
+
+ @SerializedName(CARD_ID)
+ @Expose
+ val id: String,
+
+ @SerializedName(CARD_SET)
+ @Expose
+ val cardSet: String,
+
+ @SerializedName(TYPE)
+ @Expose
+ val type: String,
+
+ @SerializedName(RARITY)
+ @Expose
+ val rarity: String?,
+
+ @SerializedName(ATTACK)
+ @Expose
+ val attack: Int?,
+
+ @SerializedName(COST)
+ @Expose
+ val cost: Int?,
+
+ @SerializedName(HEALTH)
+ @Expose
+ val health: Int?,
+
+ @SerializedName(IMAGE)
+ @Expose
+ val image: String?,
 )

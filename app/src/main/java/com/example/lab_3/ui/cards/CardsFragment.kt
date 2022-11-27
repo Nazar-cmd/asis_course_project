@@ -1,28 +1,43 @@
 package com.example.lab_3.ui.cards
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3.R
-import com.example.lab_3.data.mock.model.MockCard
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.lab_3.domain.model.DomainCard
+import com.example.lab_3.presentation.uistates.CardsUiState
+import com.example.lab_3.ui.CardsStateEvent
+import com.example.lab_3.ui.CardsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 private lateinit var adapter: CardsAdapter
 private lateinit var recyclerView: RecyclerView
 
-
+@AndroidEntryPoint
 class CardsFragment : Fragment(){
-    private var cardsArrayList = arrayListOf<MockCard>()
+
+    private val TAG: String = "Debug"
+
+    private lateinit var errorMessageText: TextView
+    private lateinit var progresBar: ProgressBar
+
+    private val viewModel: CardsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        println("HEEEI")
+
+        subscribeObservers();
+        viewModel.setStateEvent(CardsStateEvent.GetCardsEvents)
     }
 
     override fun onCreateView(
@@ -30,34 +45,51 @@ class CardsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cards, container, false)
+        val view = inflater.inflate(R.layout.fragment_cards, container, false)
+
+        errorMessageText = view.findViewById(R.id.error_text);
+        progresBar = view.findViewById(R.id.progres_bar)
+        recyclerView = view.findViewById(R.id.cards_recycler_view)
+
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dataInitialize()
+    private fun subscribeObservers() {
+        viewModel.dataState.observe(this, Observer { dataState ->
+            when (dataState) {
+                is CardsUiState.Success<List<DomainCard>> -> {
+                    displayLoading(false);
+                    displayCards(dataState.data)
+                }
+                is CardsUiState.Error<List<DomainCard>> -> {
+                    displayLoading(false);
+                    displayError(dataState.exception.message)
+                }
+                is CardsUiState.Loading-> {
+                    displayLoading(true)
+                }
+            }
+        })
+    }
 
-        Log.println(Log.INFO, "", cardsArrayList.toString())
-
+    private fun displayCards(cards: List<DomainCard>) {
         val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.cards_recycler_view)
 
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter = CardsAdapter(cardsArrayList)
+        adapter = CardsAdapter(cards)
         recyclerView.adapter = adapter
     }
 
-    private fun dataInitialize() {
+    private fun displayError(message: String?) {
+        if (message != null) {
+            errorMessageText.text = message
+        } else {
+            errorMessageText.text = "Some error occured"
+        }
+    }
 
-        var jsonString = requireActivity().applicationContext
-            .assets
-            .open("cardsList.json")
-            .bufferedReader()
-            .use { it.readText() }
-
-        val listCardsType = object : TypeToken<List<MockCard>>() {}.type
-
-        cardsArrayList = Gson().fromJson(jsonString, listCardsType)
+    private fun displayLoading(isDisplayed: Boolean) {
+        progresBar.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 }
